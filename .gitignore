@@ -1,1 +1,7 @@
 venv_CAMELSprofiles/
+build
+CAMELSprofiles.egg-info/
+CAMELSprofiles/__pycache__/
+
+
+plots/

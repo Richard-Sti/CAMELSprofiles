@@ -12,7 +12,27 @@
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+"""Various utilities."""
+import numpy as np
+import warnings
 
-from .chi2 import chi2                                                          # noqa
-from .io import read_LH_parameters, read_CV, read_single                        # noqa
-from .utils import profiles_percentiles                                         # noqa
+
+def profiles_percentiles(profiles, percentiles=[16, 50, 84]):
+    """
+    Calculate the percentiles of the profiles over the haloes.
+
+    Parameters
+    ----------
+    profiles : 2-dimensional array of shape (n_haloes, n_bins)
+        The profiles of the haloes.
+    percentiles : list of floats, optional
+        The percentiles to calculate.
+
+    Returns
+    -------
+    percentiles : tuple of 1-dimensional arrays
+        The percentiles of the profiles.
+    """
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message="All-NaN slice encountered")
+        return np.nanpercentile(profiles, percentiles, axis=0)
